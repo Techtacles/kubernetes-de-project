@@ -2,6 +2,7 @@ from produce_records import create_stream
 import json
 import os
 import boto3
+from datetime import datetime
 region=os.environ["REGION_NAME"]
 bucket_name=os.environ["BUCKET_NAME"]
 #Get the base date and time

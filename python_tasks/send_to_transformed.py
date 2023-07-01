@@ -4,6 +4,7 @@ import boto3
 import pandas as pd
 region=os.environ["REGION_NAME"]
 bucket_name=os.environ["BUCKET_NAME"]
+trans_bucket_name=os.environ["TRANS_BUCKET_NAME"]
 def get_last_record_key():
     client=get_s3_client()
     objs=client.list_objects(Bucket=bucket_name)['Contents'][-1]['Key']
@@ -18,6 +19,6 @@ def extract_name_of_file_csv():
     return csv_data,name_of_file
 
 def upload_to_s3(client):
-    response=client.put_object(Body=extract_name_of_file_csv()[0],Bucket=bucket_name,Key=f'{extract_name_of_file_csv()[1]}.csv')
+    response=client.put_object(Body=extract_name_of_file_csv()[0],Bucket=trans_bucket_name,Key=f'{extract_name_of_file_csv()[1]}.csv')
     return "Successfull moved data to the transformed bucket"
 upload_to_s3()
