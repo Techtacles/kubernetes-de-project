@@ -14,9 +14,9 @@ RUN apt-get update && \
 USER airflow
 RUN mkdir -p /opt/airflow/python_tasks
 WORKDIR /opt/airflow/python_tasks
-ENV BUCKET_NAME=weather-api-raw-s3
+ENV BUCKET_NAME=kube-project-raw-bucket
 ENV REGION_NAME=us-east-1
-ENV TRANS_BUCKET_NAME=weather-api-transformed-s3
+ENV TRANS_BUCKET_NAME=kube-project-trans-bucket
 COPY /python_tasks/. .
 RUN pip install -r requirements.txt
 WORKDIR /opt/airflow/dags
