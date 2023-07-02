@@ -87,3 +87,8 @@ variable "bucket_env_trans" {
   type = string
 
 }
+
+variable "enable_all" {
+  type = bool
+  
+}
