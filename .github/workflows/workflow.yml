@@ -31,11 +31,11 @@ jobs:
       uses: hashicorp/setup-terraform@v1
 
     - name: Export Terraform TFVARS file
-        run: |
-          echo "$TERRAFORM_VARIABLES" >> terraform.tfvars
-        shell: bash
-        env:
-          TERRAFORM_VARIABLES: ${{ secrets.TERRAFORM_VARIABLES }}
+      run: |
+        echo "$TERRAFORM_VARIABLES" >> terraform.tfvars
+      shell: bash
+      env:
+        TERRAFORM_VARIABLES: ${{ secrets.TERRAFORM_VARIABLES }}
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
