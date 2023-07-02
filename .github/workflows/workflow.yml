@@ -53,12 +53,11 @@ jobs:
       run: terraform fmt -check
 
     - name: Save TFState to file
-      run: |
-        terraform state pull > tfstate.tfstate
+      shell: bash
+      run: terraform state pull > tfstate.tfstate
       
     - name: Save TFState to s3
-      run: |
-        aws s3 cp tfstate.tfstate s3://$TFSTATE_BUCKET
+      run: aws s3 cp tfstate.tfstate s3://$TFSTATE_BUCKET
       env:
           TFSTATE_BUCKET: ${{ secrets.TFSTATE_BUCKET}}
     # Generates an execution plan for Terraform
@@ -76,7 +75,7 @@ jobs:
     - name: Deploy to ECR
       run: |
         aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ACCOUNT_NUMBER.dkr.ecr.us-east-1.amazonaws.com
-        docker build -t $REPO_NAME webserver.dockerfile
+        docker build -t $REPO_NAME -f webserver.dockerfile .
         docker tag $REPO_NAME:latest $ACCOUNT_NUMBER.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:latest
         docker push $ACCOUNT_NUMBER.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:latest
       env:
