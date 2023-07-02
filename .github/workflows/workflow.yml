@@ -36,6 +36,13 @@ jobs:
       env:
         TERRAFORM_VARIABLES: ${{ secrets.TERRAFORM_VARIABLES }}
 
+    - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_WEB_IDENTITY_ROLE_ARN }}
+          role-session-name: kube-aws-session-role
+          aws-region: ${{ secrets.AWS_REGION }}
+
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init -backend-config="bucket=$TFSTATE_BUCKET" -upgrade
