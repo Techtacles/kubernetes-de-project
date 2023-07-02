@@ -52,14 +52,7 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check
 
-    - name: Save TFState to file
-      shell: bash
-      run: terraform state pull > tfstate.tfstate
-      
-    - name: Save TFState to s3
-      run: aws s3 cp tfstate.tfstate s3://$TFSTATE_BUCKET
-      env:
-          TFSTATE_BUCKET: ${{ secrets.TFSTATE_BUCKET}}
+    
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -lock=false -var-file="terraform.tfvars"
