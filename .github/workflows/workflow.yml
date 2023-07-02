@@ -40,7 +40,6 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v1
       with:
         role-to-assume: ${{ secrets.AWS_WEB_IDENTITY_ROLE_ARN }}
-        role-session-name: kube-aws-session-role
         aws-region: ${{ secrets.AWS_REGION }}
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
