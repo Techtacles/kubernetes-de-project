@@ -58,19 +58,7 @@ jobs:
 
       # On push to "master", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply
-      run: terraform apply -lock=false -var-file="terraform.tfvars" -auto-approve 
+    - name: Terraform Destroy
+      run: terraform destroy -lock=false -var-file="terraform.tfvars" -auto-approve 
     
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-
-    - name: Deploy to ECR
-      run: |
-        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ACCOUNT_NUMBER.dkr.ecr.us-east-1.amazonaws.com
-        docker build -t $REPO_NAME webserver.dockerfile
-        docker tag $REPO_NAME:latest $ACCOUNT_NUMBER.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:latest
-        docker push $ACCOUNT_NUMBER.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:latest
-      env:
-        ACCOUNT_NUMBER: ${{ secrets.ACCOUNT_NUMBER }}
-        REPO_NAME: ${{ secrets.ECR_REPO_NAME }}
-
+    
