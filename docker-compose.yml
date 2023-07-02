@@ -1,0 +1,19 @@
+version: '3'
+services:
+  scheduler:
+    build:
+      context: .
+      dockerfile: scheduler.dockerfile
+    image: scheduler-img
+    command: scheduler
+
+  webserver:
+    build: 
+      context: .
+      dockerfile: webserver.dockerfile
+    image: webserver-img
+    ports:
+      - 8080:8080
+    command: webserver
+    depends_on:
+      - scheduler

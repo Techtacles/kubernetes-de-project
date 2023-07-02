@@ -1,0 +1,4 @@
+boto3
+Faker
+pandas
+apache-airflow
