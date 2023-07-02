@@ -4,3 +4,4 @@
 *.vscode
 *.tfvars
 __pycache__
+.terraform.lock.hcl

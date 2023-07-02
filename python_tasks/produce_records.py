@@ -19,4 +19,3 @@ def create_stream():
                     
     return json.dumps(producer_data)
 
-create_stream()

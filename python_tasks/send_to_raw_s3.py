@@ -28,4 +28,3 @@ def main():
     upload_to_s3(get_s3_client())
     return f'Successfully uploaded {get_current_datetime()}.json to the raw S3 bucket'
 
-main()

@@ -11,13 +11,13 @@ RUN apt-get update && \
         && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+USER airflow
 RUN mkdir -p /opt/airflow/python_tasks
 WORKDIR /opt/airflow/python_tasks
 ENV BUCKET_NAME=weather-api-raw-s3
 ENV REGION_NAME=us-east-1
 ENV TRANS_BUCKET_NAME=weather-api-transformed-s3
 COPY /python_tasks/. .
-USER airflow
 RUN pip install -r requirements.txt
 WORKDIR /opt/airflow/dags
 COPY /dags/. .
