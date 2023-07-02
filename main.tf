@@ -9,13 +9,13 @@ module "ec2" {
 
 }
 module "ecr" {
-  count             = var.enable_all == true ? 1 : 0
+  count               = var.enable_all == true ? 1 : 0
   source              = "./modules/ecr"
   ecr_repository_name = var.ecr_repository_name
 
 }
 module "redshift" {
-  count             = var.enable_all == true ? 1 : 0
+  count                 = var.enable_all == true ? 1 : 0
   source                = "./modules/redshift"
   cluster_identifier    = var.cluster_identifier
   redshift_db_name      = var.redshift_db_name
@@ -26,7 +26,7 @@ module "redshift" {
 
 }
 module "s3_raw" {
-  count             = var.enable_all == true ? 1 : 0
+  count       = var.enable_all == true ? 1 : 0
   source      = "./modules/s3"
   bucket_env  = var.bucket_env
   bucket_name = var.bucket_name
@@ -34,7 +34,7 @@ module "s3_raw" {
 
 }
 module "s3_transformed" {
-  count             = var.enable_all == true ? 1 : 0
+  count       = var.enable_all == true ? 1 : 0
   source      = "./modules/s3"
   bucket_env  = var.bucket_env_trans
   bucket_name = var.bucket_name_trans
@@ -44,7 +44,7 @@ module "s3_transformed" {
 }
 
 module "eks" {
-  count             = var.enable_all == true ? 1 : 0
+  count               = var.enable_all == true ? 1 : 0
   source              = "./modules/eks"
   vpc_id              = var.vpc_id
   eks_cluster_name    = var.eks_cluster_name
