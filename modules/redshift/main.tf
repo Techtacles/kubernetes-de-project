@@ -5,5 +5,5 @@ resource "aws_redshift_cluster" "redshift_cluster" {
   master_password    = var.redshift_password
   node_type          = var.redshift_node_type
   cluster_type       = var.redshift_cluster_type
-
+  skip_final_snapshot = true
 }

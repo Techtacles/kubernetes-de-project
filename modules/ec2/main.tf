@@ -1,5 +1,5 @@
 resource "aws_instance" "ec2_instance" {
-  ami           = data.aws_ami.ubuntu.id
+  ami           = var.ec2_ami
   instance_type = var.ec2_instance_type
   monitoring = var.ec2_monitoring
 

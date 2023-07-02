@@ -10,3 +10,7 @@ variable "ec2_tag_name" {
     type = string
   
 }
+variable "ec2_ami" {
+    type = string
+  
+}

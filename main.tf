@@ -3,6 +3,7 @@ module "ec2" {
   ec2_instance_type = var.ec2_instance_type
   ec2_monitoring    = var.ec2_monitoring
   ec2_tag_name      = var.ec2_tag_name
+  ec2_ami           = var.ec2_ami
 
 
 }
