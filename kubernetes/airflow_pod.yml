@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: airflow-pod
+  labels:
+    name: airflow-pod
+    app: airflow-pod-app
+spec:
+  containers:
+  - name: airflow_container
+    image: https://public.ecr.aws/w4n2x3q5/kube_project_ecr_repo:latest
+    ports:
+     - containerPort: 8080
