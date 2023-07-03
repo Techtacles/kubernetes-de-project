@@ -1,0 +1,55 @@
+name: 'Terraform'
+
+on:
+  push:
+    branches: [ "destroy" ]
+
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    environment: production
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    - name: Export Terraform TFVARS file
+      run: |
+        echo "$TERRAFORM_VARIABLES" >> terraform.tfvars
+      shell: bash
+      env:
+        TERRAFORM_VARIABLES: ${{ secrets.TERRAFORM_VARIABLES }}
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: ${{ secrets.AWS_WEB_IDENTITY_ROLE_ARN }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init -backend-config="bucket=$TFSTATE_BUCKET" -upgrade
+      env:
+          TFSTATE_BUCKET: ${{ secrets.TFSTATE_BUCKET}}
+
+    - name: Terraform Destroy resources
+      run: terraform destroy --auto-approve
+
+    
+    
